@@ -1,27 +1,3 @@
-# Property Pulse
-
-> A web application to help you find your next rental property.
-
-This is the main project from my [Next 14 From Scratch Course](https://www.traversymedia.com/nextjs-from-scratch)
-
-## Important notes
-
-If you are following along with the course and running into issues, then please
-take the time to read the README in the [bugfix branch](https://github.com/bradtraversy/property-pulse/tree/bugfix)
-as this solves many common problems.
-
-There is also a [refactor branch](https://github.com/bradtraversy/property-pulse/tree/refactor)
-where the code has been heavily refactored to stay true to NextJS recommended
-best practices by using querying the database directly from our server
-components for data fetching, and performing updates and adding data using
-server actions.  
-The refactor also makes deployment a fair bit smoother.  
-The course is currently being re recorded for a re release using the code in
-the refactor branch.
-
-The `_theme_files` folder contains the pure HTML files with Tailwind classes.
-
-<img src="/public/images/screen.jpg" />
 
 ## Features
 
@@ -99,7 +75,3 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
