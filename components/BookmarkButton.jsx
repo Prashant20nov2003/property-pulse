@@ -1,10 +1,10 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
-import { toast } from 'react-toastify';
 import { FaBookmark } from 'react-icons/fa';
-import checkBookmarkStatus from '@/app/actions/checkBookmarkStatus';
+import { useSession } from 'next-auth/react';
 import bookmarkProperty from '@/app/actions/bookmarkProperty';
+import checkBookmarkStatus from '@/app/actions/checkBookmarkStatus';
+import { toast } from 'react-toastify';
 
 const BookmarkButton = ({ property }) => {
   const { data: session } = useSession();
@@ -19,14 +19,12 @@ const BookmarkButton = ({ property }) => {
       return;
     }
 
-    // NOTE: here we can use a server action to check the bookmark status for a
-    // specific use for the property.
     checkBookmarkStatus(property._id).then((res) => {
       if (res.error) toast.error(res.error);
       if (res.isBookmarked) setIsBookmarked(res.isBookmarked);
       setLoading(false);
     });
-  }, [property._id, userId]);
+  }, [property._id, userId, checkBookmarkStatus]);
 
   const handleClick = async () => {
     if (!userId) {
@@ -34,8 +32,6 @@ const BookmarkButton = ({ property }) => {
       return;
     }
 
-    // NOTE: here we can use a server action to mark bookmark a property for the
-    // user.
     bookmarkProperty(property._id).then((res) => {
       if (res.error) return toast.error(res.error);
       setIsBookmarked(res.isBookmarked);

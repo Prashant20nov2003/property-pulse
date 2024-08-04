@@ -1,5 +1,5 @@
 'use client';
-import getUndreadMessageCount from '@/app/actions/getUnreadMessageCount';
+import getUnreadMessageCount from '@/app/actions/getUnreadMessageCount';
 import { useSession } from 'next-auth/react';
 import { createContext, useContext, useState, useEffect } from 'react';
 
@@ -12,18 +12,13 @@ export function GlobalProvider({ children }) {
 
   const { data: session } = useSession();
 
-  // NOTE: since our GlobalContext is responsible for unreadCount state then it
-  // makes sense to also fetch the unreadCount here too and remove that from the
-  // UnreadMessageCount component.
-  // Additionally here we are using a server action to get the unreadCount
-
   useEffect(() => {
     if (session && session.user) {
-      getUndreadMessageCount().then((res) => {
+      getUnreadMessageCount().then((res) => {
         if (res.count) setUnreadCount(res.count);
       });
     }
-  }, [getUndreadMessageCount, session]);
+  }, [getUnreadMessageCount, session]);
 
   return (
     <GlobalContext.Provider

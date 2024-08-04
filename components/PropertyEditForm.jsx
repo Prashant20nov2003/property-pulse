@@ -1,13 +1,6 @@
 import updateProperty from '@/app/actions/updateProperty';
-import SubmitButton from './SubmitButton';
-
-// NOTE: here we can submit via server action and give user feedback using useFormState.
-// This component has also been changed to a server component.
 
 const PropertyEditForm = ({ property }) => {
-  // NOTE: to pass the id to our server action we can use Function.bind
-  //https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations#passing-additional-arguments
-
   const updatePropertyById = updateProperty.bind(null, property._id);
 
   return (
@@ -25,13 +18,13 @@ const PropertyEditForm = ({ property }) => {
           required
           defaultValue={property.type}
         >
-          <option defaultValue='Apartment'>Apartment</option>
-          <option defaultValue='Condo'>Condo</option>
-          <option defaultValue='House'>House</option>
-          <option defaultValue='Cabin Or Cottage'>Cabin or Cottage</option>
-          <option defaultValue='Room'>Room</option>
-          <option defaultValue='Studio'>Studio</option>
-          <option defaultValue='Other'>Other</option>
+          <option value='Apartment'>Apartment</option>
+          <option value='Condo'>Condo</option>
+          <option value='House'>House</option>
+          <option value='CabinOrCottage'>Cabin or Cottage</option>
+          <option value='Room'>Room</option>
+          <option value='Studio'>Studio</option>
+          <option value='Other'>Other</option>
         </select>
       </div>
       <div className='mb-4'>
@@ -156,7 +149,7 @@ const PropertyEditForm = ({ property }) => {
               type='checkbox'
               id='amenity_wifi'
               name='amenities'
-              defaultValue='Wifi'
+              value='Wifi'
               className='mr-2'
               defaultChecked={property.amenities.includes('Wifi')}
             />
@@ -167,9 +160,9 @@ const PropertyEditForm = ({ property }) => {
               type='checkbox'
               id='amenity_kitchen'
               name='amenities'
-              defaultValue='Full Kitchen'
+              value='Full kitchen'
               className='mr-2'
-              defaultChecked={property.amenities.includes('Full Kitchen')}
+              defaultChecked={property.amenities.includes('Full kitchen')}
             />
             <label htmlFor='amenity_kitchen'>Full kitchen</label>
           </div>
@@ -178,7 +171,7 @@ const PropertyEditForm = ({ property }) => {
               type='checkbox'
               id='amenity_washer_dryer'
               name='amenities'
-              defaultValue='Washer & Dryer'
+              value='Washer & Dryer'
               className='mr-2'
               defaultChecked={property.amenities.includes('Washer & Dryer')}
             />
@@ -189,7 +182,7 @@ const PropertyEditForm = ({ property }) => {
               type='checkbox'
               id='amenity_free_parking'
               name='amenities'
-              defaultValue='Free Parking'
+              value='Free Parking'
               className='mr-2'
               defaultChecked={property.amenities.includes('Free Parking')}
             />
@@ -200,7 +193,7 @@ const PropertyEditForm = ({ property }) => {
               type='checkbox'
               id='amenity_pool'
               name='amenities'
-              defaultValue='Swimming Pool'
+              value='Swimming Pool'
               className='mr-2'
               defaultChecked={property.amenities.includes('Swimming Pool')}
             />
@@ -211,7 +204,7 @@ const PropertyEditForm = ({ property }) => {
               type='checkbox'
               id='amenity_hot_tub'
               name='amenities'
-              defaultValue='Hot Tub'
+              value='Hot Tub'
               className='mr-2'
               defaultChecked={property.amenities.includes('Hot Tub')}
             />
@@ -222,7 +215,7 @@ const PropertyEditForm = ({ property }) => {
               type='checkbox'
               id='amenity_24_7_security'
               name='amenities'
-              defaultValue='24/7 Security'
+              value='24/7 Security'
               className='mr-2'
               defaultChecked={property.amenities.includes('24/7 Security')}
             />
@@ -233,7 +226,7 @@ const PropertyEditForm = ({ property }) => {
               type='checkbox'
               id='amenity_wheelchair_accessible'
               name='amenities'
-              defaultValue='Wheelchair Accessible'
+              value='Wheelchair Accessible'
               className='mr-2'
               defaultChecked={property.amenities.includes(
                 'Wheelchair Accessible'
@@ -248,7 +241,7 @@ const PropertyEditForm = ({ property }) => {
               type='checkbox'
               id='amenity_elevator_access'
               name='amenities'
-              defaultValue='Elevator Access'
+              value='Elevator Access'
               className='mr-2'
               defaultChecked={property.amenities.includes('Elevator Access')}
             />
@@ -259,7 +252,7 @@ const PropertyEditForm = ({ property }) => {
               type='checkbox'
               id='amenity_dishwasher'
               name='amenities'
-              defaultValue='Dishwasher'
+              value='Dishwasher'
               className='mr-2'
               defaultChecked={property.amenities.includes('Dishwasher')}
             />
@@ -270,7 +263,7 @@ const PropertyEditForm = ({ property }) => {
               type='checkbox'
               id='amenity_gym_fitness_center'
               name='amenities'
-              defaultValue='Gym/Fitness Center'
+              value='Gym/Fitness Center'
               className='mr-2'
               defaultChecked={property.amenities.includes('Gym/Fitness Center')}
             />
@@ -283,7 +276,7 @@ const PropertyEditForm = ({ property }) => {
               type='checkbox'
               id='amenity_air_conditioning'
               name='amenities'
-              defaultValue='Air Conditioning'
+              value='Air Conditioning'
               className='mr-2'
               defaultChecked={property.amenities.includes('Air Conditioning')}
             />
@@ -294,7 +287,7 @@ const PropertyEditForm = ({ property }) => {
               type='checkbox'
               id='amenity_balcony_patio'
               name='amenities'
-              defaultValue='Balcony/Patio'
+              value='Balcony/Patio'
               className='mr-2'
               defaultChecked={property.amenities.includes('Balcony/Patio')}
             />
@@ -305,7 +298,7 @@ const PropertyEditForm = ({ property }) => {
               type='checkbox'
               id='amenity_smart_tv'
               name='amenities'
-              defaultValue='Smart TV'
+              value='Smart TV'
               className='mr-2'
               defaultChecked={property.amenities.includes('Smart TV')}
             />
@@ -316,7 +309,7 @@ const PropertyEditForm = ({ property }) => {
               type='checkbox'
               id='amenity_coffee_maker'
               name='amenities'
-              defaultValue='Coffee Maker'
+              value='Coffee Maker'
               className='mr-2'
               defaultChecked={property.amenities.includes('Coffee Maker')}
             />
@@ -379,7 +372,7 @@ const PropertyEditForm = ({ property }) => {
         <input
           type='text'
           id='seller_name'
-          name='seller_info.name'
+          name='seller_info.name.'
           className='border rounded w-full py-2 px-3'
           placeholder='Name'
           defaultValue={property.seller_info.name}
@@ -418,12 +411,13 @@ const PropertyEditForm = ({ property }) => {
           defaultValue={property.seller_info.phone}
         />
       </div>
-
       <div>
-        <SubmitButton
-          pendingText='Updating Property...'
-          text='Update Property'
-        />
+        <button
+          className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline'
+          type='submit'
+        >
+          Update Property
+        </button>
       </div>
     </form>
   );

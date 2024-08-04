@@ -20,10 +20,6 @@ async function updateProperty(propertyId, formData) {
     throw new Error('Current user does not own this property.');
   }
 
-  // Access all values from amenities and images
-  const amenities = formData.getAll('amenities');
-
-  // Create propertyData object for database
   const propertyData = {
     type: formData.get('type'),
     name: formData.get('name'),
@@ -37,7 +33,7 @@ async function updateProperty(propertyId, formData) {
     beds: formData.get('beds'),
     baths: formData.get('baths'),
     square_feet: formData.get('square_feet'),
-    amenities,
+    amenities: formData.getAll('amenities'),
     rates: {
       weekly: formData.get('rates.weekly'),
       monthly: formData.get('rates.monthly'),
@@ -56,9 +52,6 @@ async function updateProperty(propertyId, formData) {
     propertyData
   );
 
-  // Revalidate the cache
-  // NOTE: since properties are pretty much on every page, we can simply
-  // revalidate everything that uses our top level layout
   revalidatePath('/', 'layout');
 
   redirect(`/properties/${updatedProperty._id}`);

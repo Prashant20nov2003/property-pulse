@@ -1,12 +1,9 @@
 'use client';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import { useGlobalContext } from '@/context/GlobalContext';
 import markMessageAsRead from '@/app/actions/markMessageAsRead';
 import deleteMessage from '@/app/actions/deleteMessage';
-
-// NOTE: This component now uses server actions to mark a message as read or
-// delete a message rather than using a fetch request to an API route handler.
+import { useGlobalContext } from '@/context/GlobalContext';
 
 const MessageCard = ({ message }) => {
   const [isRead, setIsRead] = useState(message.read);
@@ -16,7 +13,6 @@ const MessageCard = ({ message }) => {
 
   const handleReadClick = async () => {
     const read = await markMessageAsRead(message._id);
-
     setIsRead(read);
     setUnreadCount((prevCount) => (read ? prevCount - 1 : prevCount + 1));
     toast.success(`Marked as ${read ? 'read' : 'new'}`);
@@ -35,11 +31,11 @@ const MessageCard = ({ message }) => {
 
   return (
     <div className='relative bg-white p-4 rounded-md shadow-md border border-gray-200'>
-      {!isRead ? (
+      {!isRead && (
         <div className='absolute top-2 right-2 bg-yellow-500 text-white px-2 py-1 rounded-md'>
           New
         </div>
-      ) : null}
+      )}
       <h2 className='text-xl mb-4'>
         <span className='font-bold'>Property Inquiry:</span>{' '}
         {message.property.name}
@@ -47,10 +43,6 @@ const MessageCard = ({ message }) => {
       <p className='text-gray-700'>{message.body}</p>
 
       <ul className='mt-4'>
-        <li>
-          <strong>Name:</strong> {message.sender.username}
-        </li>
-
         <li>
           <strong>Reply Email:</strong>{' '}
           <a href={`mailto:${message.email}`} className='text-blue-500'>
@@ -85,4 +77,5 @@ const MessageCard = ({ message }) => {
     </div>
   );
 };
+
 export default MessageCard;

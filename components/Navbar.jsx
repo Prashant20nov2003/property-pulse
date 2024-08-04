@@ -1,11 +1,11 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
-import Image from 'next/image';
 import Link from 'next/link';
+import Image from 'next/image';
+import { usePathname } from 'next/navigation';
+import { FaGoogle } from 'react-icons/fa';
 import logo from '@/assets/images/logo-white.png';
 import profileDefault from '@/assets/images/profile.png';
-import { FaGoogle } from 'react-icons/fa';
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
 import UnreadMessageCount from './UnreadMessageCount';
 
@@ -33,9 +33,6 @@ const Navbar = () => {
     });
   }, []);
 
-  // NOTE: the aria-expanded attribute value should change with state for
-  // correct a11y
-
   return (
     <nav className='bg-blue-700 border-b border-blue-500'>
       <div className='mx-auto max-w-7xl px-2 sm:px-6 lg:px-8'>
@@ -47,8 +44,8 @@ const Navbar = () => {
               id='mobile-dropdown-button'
               className='relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white'
               aria-controls='mobile-menu'
-              aria-expanded={isMobileMenuOpen}
-              onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+              aria-expanded='false'
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               <span className='absolute -inset-0.5'></span>
               <span className='sr-only'>Open main menu</span>
@@ -116,11 +113,11 @@ const Navbar = () => {
             <div className='hidden md:block md:ml-6'>
               <div className='flex items-center'>
                 {providers &&
-                  Object.values(providers).map((provider, index) => (
+                  Object.values(providers).map((provider) => (
                     <button
+                      key={provider.name}
                       onClick={() => signIn(provider.id)}
-                      key={index}
-                      className='flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2'
+                      className='flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-3'
                     >
                       <FaGoogle className='text-white mr-2' />
                       <span>Login or Register</span>
@@ -164,7 +161,7 @@ const Navbar = () => {
                     type='button'
                     className='relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'
                     id='user-menu-button'
-                    aria-expanded={isProfileMenuOpen}
+                    aria-expanded='false'
                     aria-haspopup='true'
                     onClick={() => setIsProfileMenuOpen((prev) => !prev)}
                   >
@@ -217,7 +214,7 @@ const Navbar = () => {
                     <button
                       onClick={() => {
                         setIsProfileMenuOpen(false);
-                        signOut();
+                        signOut({ callbackUrl: '/' });
                       }}
                       className='block px-4 py-2 text-sm text-gray-700'
                       role='menuitem'
@@ -233,7 +230,6 @@ const Navbar = () => {
           )}
         </div>
       </div>
-
       {/* <!-- Mobile menu, show/hide based on menu state. --> */}
       {isMobileMenuOpen && (
         <div id='mobile-menu'>
@@ -264,18 +260,23 @@ const Navbar = () => {
                 Add Property
               </Link>
             )}
-
-            {!session &&
-              providers &&
-              Object.values(providers).map((provider, index) => (
-                <button
-                  onClick={() => signIn(provider.id)}
-                  key={index}
-                  className='flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2'
-                >
-                  <span>Login or Register</span>
-                </button>
-              ))}
+            {!session && (
+              <div className='block md:ml-6'>
+                <div className='flex items-center'>
+                  {providers &&
+                    Object.values(providers).map((provider) => (
+                      <button
+                        key={provider.name}
+                        onClick={() => signIn(provider.id)}
+                        className='flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-3'
+                      >
+                        <FaGoogle className='text-white mr-2' />
+                        <span>Login or Register</span>
+                      </button>
+                    ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}

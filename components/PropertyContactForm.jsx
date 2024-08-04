@@ -1,56 +1,34 @@
 'use client';
-import { FaPaperPlane } from 'react-icons/fa';
-import { toast } from 'react-toastify';
-import { useSession } from 'next-auth/react';
-import addMessage from '@/app/actions/addMessage';
-import { useFormStatus, useFormState } from 'react-dom';
 import { useEffect } from 'react';
-
-// NOTE: Using a separate component for our submit button allows us to use the
-// useFormStatus hook to give the user feedback about sending a message, in the
-// button itself.
-// https://react.dev/reference/react-dom/hooks/useFormStatus
-
-function SubmitMessageButton() {
-  const status = useFormStatus();
-  return (
-    <button
-      className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline flex items-center justify-center'
-      type='submit'
-    >
-      <FaPaperPlane className='mr-2' />{' '}
-      {status.pending ? 'Sending...' : 'Send Message'}
-    </button>
-  );
-}
-
-// NOTE: This component has been changed to use server actions to send a message
-// to another user.
+import { useFormState } from 'react-dom';
+import { useSession } from 'next-auth/react';
+import { toast } from 'react-toastify';
+import addMessage from '@/app/actions/addMessage';
+import SubmitMessageButton from './SubmitMessageButton';
 
 const PropertyContactForm = ({ property }) => {
   const { data: session } = useSession();
 
-  // NOTE: use the useFormState hook to know when form has submitted.
-  // https://react.dev/reference/react-dom/hooks/useFormState
-  const [submitState, formAction] = useFormState(addMessage, {});
+  const [state, formAction] = useFormState(addMessage, {});
 
   useEffect(() => {
-    if (submitState.error) toast.error(submitState.error);
-    if (submitState.submitted) toast.success('Message sent successfully');
-  }, [submitState]);
+    if (state.error) toast.error(state.error);
+    if (state.submitted) toast.success('Message sent successfully');
+  }, [state]);
+
+  if (state.submitted) {
+    return (
+      <p className='text-green-500 mb-4'>
+        Your message has been sent successfully
+      </p>
+    );
+  }
 
   return (
-    <div className='bg-white p-6 rounded-lg shadow-md'>
-      <h3 className='text-xl font-bold mb-6'>Contact Property Manager</h3>
-      {!session ? (
-        <p>You must be logged in to send a message</p>
-      ) : submitState.submitted ? (
-        <p className='text-green-500 mb-4'>
-          Your message has been sent successfully
-        </p>
-      ) : (
+    session && (
+      <div className='bg-white p-6 rounded-lg shadow-md'>
+        <h3 className='text-xl font-bold mb-6'>Contact Property Manager</h3>
         <form action={formAction}>
-          {/* NOTE: Here we have two hidden inputs to add the property id and the owner to our FormData submission */}
           <input
             type='hidden'
             id='property'
@@ -128,8 +106,8 @@ const PropertyContactForm = ({ property }) => {
             <SubmitMessageButton />
           </div>
         </form>
-      )}
-    </div>
+      </div>
+    )
   );
 };
 export default PropertyContactForm;

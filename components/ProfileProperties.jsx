@@ -1,12 +1,11 @@
 'use client';
-
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
 import deleteProperty from '@/app/actions/deleteProperty';
 
-function ProfileProperties({ properties: initialProperties }) {
+const ProfileProperties = ({ properties: initialProperties }) => {
   const [properties, setProperties] = useState(initialProperties);
 
   const handleDeleteProperty = async (propertyId) => {
@@ -16,7 +15,9 @@ function ProfileProperties({ properties: initialProperties }) {
 
     if (!confirmed) return;
 
-    await deleteProperty(propertyId);
+    const deletePropertyById = deleteProperty.bind(null, propertyId);
+
+    await deletePropertyById();
 
     toast.success('Property Deleted');
 
@@ -63,6 +64,6 @@ function ProfileProperties({ properties: initialProperties }) {
       </div>
     </div>
   ));
-}
+};
 
 export default ProfileProperties;

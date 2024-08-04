@@ -27,6 +27,7 @@ async function deleteMessage(messageId) {
 
   // revalidate cache
   revalidatePath('/messages', 'page');
+
   await message.deleteOne();
 }
 

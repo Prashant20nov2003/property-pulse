@@ -6,10 +6,6 @@ const override = {
   margin: '100px auto',
 };
 
-// NOTE: Here 'loading' will be undefined as a loading file doesn't receive any
-// props:
-// https://nextjs.org/docs/app/api-reference/file-conventions/loading
-
 const LoadingPage = () => {
   return (
     <ClipLoader

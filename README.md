@@ -1,4 +1,8 @@
-# Contents
+# Property Pulse
+
+> A web application to help you find your next rental property.
+
+The `_theme_files` folder contains the pure HTML files with Tailwind classes.
 
 ## Features
 
@@ -20,6 +24,7 @@ Here are some of the current features that Property Pulse has:
 - [x] Loading spinners
 - [x] Responsive design (Tailwind)
 - [x] Custom 404 page
+- [x] Next.js Actions
 
 Property Pulse uses the following technologies:
 
@@ -77,5 +82,6 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
----
+## License
 
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details

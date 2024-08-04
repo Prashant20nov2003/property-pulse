@@ -1,16 +1,10 @@
 import Image from 'next/image';
+import connectDB from '@/config/database';
+import Property from '@/models/Property';
+import { getSessionUser } from '@/utils/getSessionUser';
 import profileDefault from '@/assets/images/profile.png';
 import ProfileProperties from '@/components/ProfileProperties';
-import connectDB from '@/config/database';
-import { getSessionUser } from '@/utils/getSessionUser';
 import { convertToSerializeableObject } from '@/utils/convertToObject';
-import Property from '@/models/Property';
-
-// NOTE: This component has been changed to a server component and now fetches
-// the users properties by querying the database directly.
-// We use a new client component - ProfileProperties which takes state from this
-// page component and updates when a property is deleted by using a server
-// action.
 
 const ProfilePage = async () => {
   await connectDB();
@@ -42,6 +36,7 @@ const ProfilePage = async () => {
                   alt='User'
                 />
               </div>
+
               <h2 className='text-2xl mb-4'>
                 <span className='font-bold block'>Name: </span>{' '}
                 {sessionUser.user.name}
@@ -66,4 +61,5 @@ const ProfilePage = async () => {
     </section>
   );
 };
+
 export default ProfilePage;

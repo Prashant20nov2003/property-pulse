@@ -1,21 +1,17 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AuthProvider from '@/components/AuthProvider';
-import { ToastContainer } from 'react-toastify';
 import { GlobalProvider } from '@/context/GlobalContext';
-import '@/assets/styles/globals.css';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import '@/assets/styles/globals.css';
 import 'photoswipe/dist/photoswipe.css';
 
 export const metadata = {
-  title: 'PropertyPulse | Find The Perfect Rental',
-  description: 'Find your dream rental property',
-  keywords: 'rental, find rentals, find properties',
+  title: 'PropertyPulse',
+  description: 'Find The Perfect Rental Property',
+  keywords: 'rental, property, real estate',
 };
-
-// NOTE: with moving getting the users messages to GlobalProvider then
-// GlobalProvider now needs to be a descendent of AuthProvider to be able to
-// access it's state.
 
 const MainLayout = ({ children }) => {
   return (
@@ -33,4 +29,5 @@ const MainLayout = ({ children }) => {
     </AuthProvider>
   );
 };
+
 export default MainLayout;

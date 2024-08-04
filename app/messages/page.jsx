@@ -1,14 +1,9 @@
-import MessageCard from '@/components/Message';
 import connectDB from '@/config/database';
 import Message from '@/models/Message';
-// NOTE: Import the Property model so it is instantiated in our serverless
-// environment to be able to call Message.populate
+import MessageCard from '@/components/MessageCard';
 import '@/models/Property';
 import { convertToSerializeableObject } from '@/utils/convertToObject';
 import { getSessionUser } from '@/utils/getSessionUser';
-
-// NOTE: This component has been changed to a server component so we can query
-// the DB directly without the need for a fetch request to an API route.
 
 const MessagePage = async () => {
   await connectDB();
@@ -16,6 +11,7 @@ const MessagePage = async () => {
   const sessionUser = await getSessionUser();
 
   const { userId } = sessionUser;
+  console.log(userId);
 
   const readMessages = await Message.find({ recipient: userId, read: true })
     .sort({ createdAt: -1 }) // Sort read messages in asc order

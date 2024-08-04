@@ -4,7 +4,7 @@ import connectDB from '@/config/database';
 import Message from '@/models/Message';
 import { getSessionUser } from '@/utils/getSessionUser';
 
-async function getUndreadMessageCount() {
+async function getUnreadMessageCount() {
   await connectDB();
 
   const sessionUser = await getSessionUser();
@@ -23,4 +23,4 @@ async function getUndreadMessageCount() {
   return { count };
 }
 
-export default getUndreadMessageCount;
+export default getUnreadMessageCount;
