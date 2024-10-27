@@ -1,55 +1,32 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
+import markMessageAsRead from '@/app/actions/markMessageAsRead';
+import deleteMessage from '@/app/actions/deleteMessage';
 import { useGlobalContext } from '@/context/GlobalContext';
 
-const Message = ({ message }) => {
+const MessageCard = ({ message }) => {
   const [isRead, setIsRead] = useState(message.read);
   const [isDeleted, setIsDeleted] = useState(false);
 
   const { setUnreadCount } = useGlobalContext();
 
   const handleReadClick = async () => {
-    try {
-      const res = await fetch(`/api/messages/${message._id}`, {
-        method: 'PUT',
-      });
-
-      if (res.status === 200) {
-        const { read } = await res.json();
-        setIsRead(read);
-        setUnreadCount((prevCount) => (read ? prevCount - 1 : prevCount + 1));
-        if (read) {
-          toast.success('Marked as read');
-        } else {
-          toast.success('Marked as new');
-        }
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error('Something went wrong');
-    }
+    const read = await markMessageAsRead(message._id);
+    setIsRead(read);
+    setUnreadCount((prevCount) => (read ? prevCount - 1 : prevCount + 1));
+    toast.success(`Marked as ${read ? 'read' : 'new'}`);
   };
 
   const handleDeleteClick = async () => {
-    try {
-      const res = await fetch(`/api/messages/${message._id}`, {
-        method: 'DELETE',
-      });
-
-      if (res.status === 200) {
-        setIsDeleted(true);
-        setUnreadCount((prevCount) => prevCount - 1);
-        toast.success('Message Deleted');
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error('Message was not deleted');
-    }
+    await deleteMessage(message._id);
+    setIsDeleted(true);
+    setUnreadCount((prevCount) => (isRead ? prevCount : prevCount - 1));
+    toast.success('Message Deleted');
   };
 
   if (isDeleted) {
-    return null;
+    return <p>Deleted message</p>;
   }
 
   return (
@@ -66,10 +43,6 @@ const Message = ({ message }) => {
       <p className='text-gray-700'>{message.body}</p>
 
       <ul className='mt-4'>
-        <li>
-          <strong>Name:</strong> {message.sender.username}
-        </li>
-
         <li>
           <strong>Reply Email:</strong>{' '}
           <a href={`mailto:${message.email}`} className='text-blue-500'>
@@ -104,4 +77,5 @@ const Message = ({ message }) => {
     </div>
   );
 };
-export default Message;
+
+export default MessageCard;

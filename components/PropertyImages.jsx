@@ -1,3 +1,4 @@
+'use client';
 import Image from 'next/image';
 import { Gallery, Item } from 'react-photoswipe-gallery';
 
@@ -51,7 +52,7 @@ const PropertyImages = ({ images }) => {
                         onClick={open}
                         src={image}
                         alt=''
-                        className='object-cover h-[400px] w-full rounded-xl'
+                        className='object-cover h-[400px] w-full rounded-xl cursor-pointer'
                         width={0}
                         height={0}
                         sizes='100vw'
